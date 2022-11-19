@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+#{{{ Bash settings
+# debug script
+set -x
+# abort on nonzero exitstatus
+set -o errexit
+# abort on unbound variable
+set -o nounset
+# don't hide errors within pipes
+set -o pipefail
+# error trace on
+set -o errtrace
+#}}}
+#{{{ Variables
+IFS=$'\t\n'   # Split on newlines and tabs (but not on spaces)
+_script_name=$(basename "${0}")
+_script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+_base_telegram_url="https://api.telegram.org"
+
+readonly _script_name _script_dir _base_telegram_url
+
+
+# requires `set -o errtrace`
+err_report() {
+    local error_code=${?}
+    error "Error in ${_script_name} in function ${1} on line ${2}"
+    exit ${error_code}
+}
+
+#Cleanup mechanism
+function finish {
+    result=$?
+    # Your cleanup code here
+    exit ${result}
+}
+
+#Will trigger finish on EXIT or ERR or when receiving SIGQUIT or SIGTERM
+trap "finish" EXIT ERR SIGQUIT SIGTERM
+#trap ERR to get the error report
+trap 'err_report "${FUNCNAME:-.}" ${LINENO}' ERR

@@ -1,0 +1,66 @@
+#! /usr/bin/env bash
+#
+# Author: Maharishi Bhatia
+#
+#/ Usage: serverbot 
+#/
+
+# shellcheck source=/dev/null
+source "$(dirname "${BASH_SOURCE[0]}")/../lib"
+
+lastchatidfile=".lastchatid"
+offsetid=
+
+function fetchMessages(){
+    # check_args "${@}"
+    :
+    local response
+    local URL
+
+    if [[ -f $lastchatidfile ]]
+    then
+        offsetid=$(cat .lastchatid)
+        URL="${_base_telegram_url:?}/bot${BOT_TOKEN:?}/getUpdates?offset=${offsetid:=}"
+    else
+        URL="${_base_telegram_url:?}/bot${BOT_TOKEN:?}/getUpdates"
+    fi
+
+    response=$(curl -s -X GET "$URL")
+
+    echo "$response"
+}
+
+main() {
+    
+    local messages
+
+    messages=$(fetchMessages)
+
+    i=0
+    while true # infinite loop
+    do
+
+        # try the command, and catch its output:
+        output=$(jq --compact-output .result[$i] <<< "$messages")
+
+        if [[ "$output" == "null" ]]
+        then
+            # output is empty - success - leave the loop:
+            break
+        else
+            # output is non-empty - continue:
+            last_chat_id=$(jq .update_id <<< "$output")
+            if [ "$last_chat_id" == "$offsetid" ]
+            then
+                _=$((i++))
+                continue
+            else
+                echo "$last_chat_id" > $lastchatidfile
+                echo "$output" > pibotpipe
+            fi
+        fi
+        _=$((i++))
+    done
+}
+
+main "${@}"
