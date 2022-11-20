@@ -1,7 +1,12 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt install jq
+sudo apt install jq #JSON manipulation library
 
 # cd /server || exit
 # mkfifo pibotpipe
+
+# Only if you want to install mqtt server, if you have an existing one you can use that server
+# sudo apt-get install mosquitto
+
+sudo apt-get install mosquitto-clients #MQTT publisher and subscriber
