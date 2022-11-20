@@ -8,7 +8,7 @@
 # shellcheck source=/dev/null
 source "$(dirname "${BASH_SOURCE[0]}")/../lib"
 
-lastchatidfile=".lastchatid"
+lastchatidfile="/tmp/.lastchatid"
 offsetid=
 
 function fetchMessages(){
@@ -56,7 +56,7 @@ main() {
                 continue
             else
                 echo "$last_chat_id" > $lastchatidfile
-                echo "$output" > pibotpipe
+                mosquitto_pub -h "$MQTT_SERVER" -t "${CHAT_ID}"_mqtt -m "$output"
             fi
         fi
         _=$((i++))

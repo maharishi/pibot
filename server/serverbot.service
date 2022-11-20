@@ -1,0 +1,8 @@
+[Unit]
+Description=Telegram Pibot Server
+
+[Service]
+ExecStart=/srv/pibot/server/serverbot
+
+[Install]
+WantedBy=multi-user.target
