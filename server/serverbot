@@ -7,6 +7,7 @@
 
 # shellcheck source=/dev/null
 source "$(dirname "${BASH_SOURCE[0]}")/../lib"
+source "$(dirname "${BASH_SOURCE[0]}")/../.secure" #generate via GitHub build 
 
 lastchatidfile="/tmp/.lastchatid"
 offsetid=
@@ -19,10 +20,10 @@ function fetchMessages(){
 
     if [[ -f $lastchatidfile ]]
     then
-        offsetid=$(cat .lastchatid)
-        URL="${_base_telegram_url:?}/bot${BOT_TOKEN:?}/getUpdates?offset=${offsetid:=}"
+        offsetid=$(cat $lastchatidfile)
+        URL="${BASE_TELEGRAM_URL:?}/bot${BOT_TOKEN:?}/getUpdates?offset=${offsetid:=}"
     else
-        URL="${_base_telegram_url:?}/bot${BOT_TOKEN:?}/getUpdates"
+        URL="${BASE_TELEGRAM_URL:?}/bot${BOT_TOKEN:?}/getUpdates"
     fi
 
     response=$(curl -s -X GET "$URL")
