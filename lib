@@ -2,7 +2,7 @@
 
 #{{{ Bash settings
 # debug script
-set -x
+# set -x
 # abort on nonzero exitstatus
 set -o errexit
 # abort on unbound variable

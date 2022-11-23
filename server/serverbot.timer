@@ -1,0 +1,11 @@
+# serverbot.timer
+[Unit] 
+Description=Runs the serverbot.service runs every 10 minute
+
+[Timer] 
+OnBootSec=1 m
+OnUnitActiveSec=10 m 
+Unit=serverbot.service 
+
+[Install] 
+WantedBy=basic.target
