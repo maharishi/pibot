@@ -1,29 +1,25 @@
 #!/bin/bash
 
-# cd /server || exit
-# mkfifo pibotpipe
+echo "Starting Install"
 
+echo
 echo "APT updating"
-#sudo apt update
+sudo apt update
 
 echo
 echo "Installing Latest Version of Dependant binaries & libraries"
-#sudo apt install -y jq #JSON manipulation library
+sudo apt install -y jq #JSON manipulation library
 
 # Only if you want to install mqtt server, if you have an existing one you can use that server
 # sudo apt-get install -y mosquitto
 
-#sudo apt-get install -y mosquitto-clients #MQTT publisher and subscriber
+sudo apt-get install -y mosquitto-clients #MQTT publisher and subscriber
 
-# echo "Setting up the secured file"
-# {
-#     echo #!/usr/bin/env bash
-#     echo export BOT_TOKEN="$BOT_TOKEN"
-#     echo export CHAT_ID="$CHAT_ID"
-#     echo export MQTT_SERVER="$MQTT_SERVER"
-#     echo export BASE_TELEGRAM_URL="$BASE_TELEGRAM_URL" 
-# } >> .secure
-# chmod +x .secure
+echo
+echo "Stopping Existiong Service"
+sudo systemctl stop serverbot.service
+sudo systemctl stop serverbot.timer
+sudo systemctl stop clientbot.service
 
 cd ..
 echo
