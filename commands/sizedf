@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+output=$(df -H --sync) 
+../telegram "$output"

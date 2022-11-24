@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+#
+# Author: Maharishi Bhatia
+
+declare -A commands
+
+commands[sizedf]=../commands/sizedf
+
+export commands

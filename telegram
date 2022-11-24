@@ -1,6 +1,6 @@
 #!/bin/bash
 # shellcheck source=/dev/null
-source .secure
+source "$(dirname "${BASH_SOURCE[0]}")/.secure"
 MESSAGE=$1
 URL="$BASE_TELEGRAM_URL/bot$BOT_TOKEN/sendMessage"
 curl -s -X POST "$URL" -d chat_id="$CHAT_ID" -d text="$MESSAGE" | jq .result.message_id

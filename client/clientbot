@@ -1,0 +1,30 @@
+#! /usr/bin/env bash
+#
+# Author: Maharishi Bhatia
+#
+#/ Usage: clientbot 
+#/
+
+# shellcheck source=/dev/null
+source "$(dirname "${BASH_SOURCE[0]}")/../lib"
+source "$(dirname "${BASH_SOURCE[0]}")/../.secure" #generate via GitHub build 
+source "$(dirname "${BASH_SOURCE[0]}")/cmdlist"
+
+backpipe="$TMPDIR/backpipe"
+
+main() {
+    [ ! -p "$backpipe" ] && mkfifo "$backpipe"
+    (mosquitto_sub -h "$MQTT_SERVER" -t "$CHAT_ID"_mqtt 1>"$backpipe") &
+    echo "$!" >"${pidfile:?}"
+
+    echo "connected."
+
+    local output
+    while read -r line; do
+        output=$(jq --compact-output .message.text <<< "$line")
+        command=$(sed -e 's/^"//' -e 's/"$//' <<< "$output")
+        eval "${commands[$command]:?}"
+    done <"$backpipe"
+}
+
+main "${@}"
