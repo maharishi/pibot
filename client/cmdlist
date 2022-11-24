@@ -5,5 +5,7 @@
 declare -A commands
 
 commands[sizedf]=../commands/sizedf
+commands[cputemp]=../commands/cputemp
+commands[lscpu]=../commands/lscpu
 
 export commands

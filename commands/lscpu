@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+cpu=$(lscpu)
+
+"$(dirname "${BASH_SOURCE[0]}")"/../telegram "$cpu"
