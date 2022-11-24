@@ -23,7 +23,7 @@ main() {
     while read -r line; do
         output=$(jq --compact-output .message.text <<< "$line")
         command=$(sed -e 's/^"//' -e 's/"$//' <<< "$output")
-        eval "${commands[$command]:?}"
+        eval "$(dirname "${BASH_SOURCE[0]}")/${commands[$command]:?}" &
     done <"$backpipe"
 }
 

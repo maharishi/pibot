@@ -43,11 +43,10 @@ function finish {
     pid=$(cat "$pidfile") ||
     [[ -f $pid ]] && kill -s SIGTERM "$pid" || 
     
-    [[ ! "$(rm -rf "$TMPDIR")" ]] && {
+    [[ ! "$(rm -rf "$TMPDIR")" && $result -eq 0 ]] && {
         echo "Exit success."
         exit 0
-    } || exit 1
-    exit ${result}
+    } || exit ${result}
 }
 
 #Will trigger finish on EXIT or ERR or when receiving SIGQUIT or SIGTERM
