@@ -4,15 +4,16 @@
 # mkfifo pibotpipe
 
 echo "APT updating"
-sudo apt update
+#sudo apt update
 
+echo
 echo "Installing Latest Version of Dependant binaries & libraries"
-sudo apt install -y jq #JSON manipulation library
+#sudo apt install -y jq #JSON manipulation library
 
 # Only if you want to install mqtt server, if you have an existing one you can use that server
 # sudo apt-get install -y mosquitto
 
-sudo apt-get install -y mosquitto-clients #MQTT publisher and subscriber
+#sudo apt-get install -y mosquitto-clients #MQTT publisher and subscriber
 
 # echo "Setting up the secured file"
 # {
@@ -25,17 +26,20 @@ sudo apt-get install -y mosquitto-clients #MQTT publisher and subscriber
 # chmod +x .secure
 
 cd ..
+echo
 echo "Copying Latest changes"
 sudo cp -vr ./pibot/* /srv/pibot/
 
+echo
 echo "Setting up the systemctl"
 cd /etc/systemd/system/ || exit
-sudo ln -s /srv/pibot/server/serverbot.service serverbot.service
-sudo ln -s /srv/pibot/server/serverbot.timer serverbot.timer
-sudo ln -s /srv/pibot/client/clientbot.service clientbot.service
+sudo ln -s /srv/pibot/server/serverbot.service serverbot.service ||
+sudo ln -s /srv/pibot/server/serverbot.timer serverbot.timer ||
+sudo ln -s /srv/pibot/client/clientbot.service clientbot.service ||
 
 cd /srv/pibot || exit
 
+echo
 echo "Reenabling & restarting systemctl"
 sudo systemctl daemon-reload
 sudo systemctl enable serverbot.service
@@ -45,5 +49,7 @@ sudo systemctl start serverbot.timer
 sudo systemctl enable clientbot.service
 sudo systemctl start clientbot.service
 
+echo
+echo "Install Complete"
 
 
