@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+output=$(dig +short myip.opendns.com @resolver1.opendns.com)
+
+"$(dirname "${BASH_SOURCE[0]}")"/../telegram "$output"
