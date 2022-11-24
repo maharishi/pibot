@@ -39,10 +39,10 @@ jobs:
         run: |
           echo "Setting up the secured file"
           {
-              echo #!/usr/bin/env bash
-              echo export BOT_TOKEN="$BOT_TOKEN"
-              echo export CHAT_ID="$CHAT_ID"
-              echo export MQTT_SERVER="$MQTT_SERVER"
-              echo export BASE_TELEGRAM_URL="$BASE_TELEGRAM_URL" 
+              echo "#!/usr/bin/env bash"
+              echo export BOT_TOKEN=${{ secrets.BOT_TOKEN }}
+              echo export CHAT_ID=${{ secrets.CHAT_ID }}
+              echo export MQTT_SERVER=${{ secrets.MQTT_SERVER }}
+              echo export BASE_TELEGRAM_URL=${{ secrets.BASE_TELEGRAM_URL }}
           } >> ${{ github.workspace }}/.secure
           chmod +x ${{ github.workspace }}/.secure
