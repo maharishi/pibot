@@ -32,6 +32,7 @@ echo "Setting up the systemctl"
 cd /etc/systemd/system/ || exit
 sudo ln -s /srv/pibot/server/serverbot.service serverbot.service
 sudo ln -s /srv/pibot/server/serverbot.timer serverbot.timer
+sudo ln -s /srv/pibot/client/clientbot.service clientbot.service
 
 cd /srv/pibot || exit
 
@@ -41,6 +42,8 @@ sudo systemctl enable serverbot.service
 sudo systemctl enable serverbot.timer
 sudo systemctl start serverbot.service
 sudo systemctl start serverbot.timer
+sudo systemctl enable clientbot.service
+sudo systemctl start clientbot.service
 
 
 
