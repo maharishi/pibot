@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export BOT_TOKEN=###############_TELEGRAM_BOT_TOKEN_###############
+export CHAT_ID=###############_CHAT_ID_###############
+export MQTT_SERVER=###############_MQTT_SERVER_IP_###############
+export BASE_TELEGRAM_URL=###############_BASE_TELEGRAM_URL_###############
