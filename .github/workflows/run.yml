@@ -43,6 +43,9 @@ jobs:
           } >> ${{ github.workspace }}/.secure
           chmod +x ${{ github.workspace }}/.secure
 
+  install:
+    runs-on: self-hosted
+    steps:
       # Runs a single command using the runners shell
-      - name: Installs the product on the server
-        run: ${{ github.workspace }}/install
+        - name: Installs the product on the server
+          run: ${{ github.workspace }}/install
