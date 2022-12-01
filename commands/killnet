@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+output=$(sqlite3 -json /etc/pihole/gravity.db "update domainlist set enabled=1 where id=30; select enabled from domainlist where id=30;") 
+"$(dirname "${BASH_SOURCE[0]}")"/../telegram "$output"
