@@ -8,5 +8,7 @@ commands[sizedf]=../commands/sizedf
 commands[cputemp]=../commands/cputemp
 commands[lscpu]=../commands/lscpu
 commands[pubip]=../commands/pubip
+commands[killnet]=../commands/killnet
+commands[spurnet]=../commands/spurnet
 
 export commands
