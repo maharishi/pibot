@@ -12,3 +12,9 @@ commands[killnet]=../commands/killnet
 commands[spurnet]=../commands/spurnet
 
 export commands
+
+exists(){
+    if [ ! -v ${commands[$1]} ]; then
+        echo 0
+    fi
+}
